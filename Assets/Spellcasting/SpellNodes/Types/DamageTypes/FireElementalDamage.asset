@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: FireElementalDamage
+  m_EditorClassIdentifier: Assembly-CSharp:Assets.Code.SpellFramework.SpellTypes.Scriptables:ElementalDamageTypeScriptable
+  m_SpellNodeName: Weak Fire
+  m_SpellNodeType: 2
+  m_FollowUpCollection: {fileID: 11400000, guid: 2963acbc06a9f734aae9de4977abaacf,
+    type: 2}
+  m_DamageValue: 15
+  m_ElementalType: 0
+  m_DeliveryMethodParticleSystems:
+  - {fileID: 198660400150643970, guid: b863094469d457447a0a1e9090a2645a, type: 2}
