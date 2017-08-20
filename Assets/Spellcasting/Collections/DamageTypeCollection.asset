@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: DamageTypeCollection
   m_EditorClassIdentifier: 
   spellNodesInCollection:
-  - {fileID: 11400000, guid: 09e47da34e49a1b49b8f3e338dc72509, type: 2}
+  - {fileID: 11400000, guid: d1a4f3ffa2eeb56459e2d1dc6881d8a9, type: 2}
   - {fileID: 11400000, guid: af5c42e591a305e458ea5ce8b3b07191, type: 2}
-  - {fileID: 11400000, guid: 09e47da34e49a1b49b8f3e338dc72509, type: 2}
-  - {fileID: 11400000, guid: 09e47da34e49a1b49b8f3e338dc72509, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
