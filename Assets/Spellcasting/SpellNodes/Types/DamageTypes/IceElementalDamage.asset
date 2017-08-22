@@ -19,3 +19,7 @@ MonoBehaviour:
   m_ElementalType: 1
   m_DeliveryMethodParticleSystems:
   - {fileID: 198727550200363928, guid: 21a7488a1011544409b5c797dcd87c6a, type: 2}
+  - {fileID: 198727550200363928, guid: 21a7488a1011544409b5c797dcd87c6a, type: 2}
+  - {fileID: 198727550200363928, guid: 21a7488a1011544409b5c797dcd87c6a, type: 2}
+  - {fileID: 198727550200363928, guid: 21a7488a1011544409b5c797dcd87c6a, type: 2}
+  - {fileID: 198062721885074732, guid: d8490c3be40ba9f4a85a8a0e598634be, type: 2}

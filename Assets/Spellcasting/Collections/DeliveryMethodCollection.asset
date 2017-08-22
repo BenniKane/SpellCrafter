@@ -13,6 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellNodesInCollection:
   - {fileID: 11400000, guid: f1e9e76887a066f4aab1a416b1f5ef8b, type: 2}
-  - {fileID: 11400000, guid: f1e9e76887a066f4aab1a416b1f5ef8b, type: 2}
+  - {fileID: 11400000, guid: bb4da211b6f6e8b42b1ab98499cbcf49, type: 2}
   - {fileID: 11400000, guid: f1e9e76887a066f4aab1a416b1f5ef8b, type: 2}
   - {fileID: 11400000, guid: f1e9e76887a066f4aab1a416b1f5ef8b, type: 2}

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Assets.Code.SpellFramework.SpellNodes;
 using UnityEngine;
+using Assets.Code.SpellFramework.DeliveryMethods.DeliveryMethodConcretes;
 
 namespace Assets.Code.SpellFramework.DeliveryMethods.Scriptables
 {
@@ -12,7 +13,8 @@ namespace Assets.Code.SpellFramework.DeliveryMethods.Scriptables
         Projectile,
         Self,
         Raycast,
-        Cone
+        Cone,
+        PBAoE
     }
     
     [CreateAssetMenu(fileName = "DeliveryMethod", menuName = "Create New Delivery method")]
@@ -22,13 +24,15 @@ namespace Assets.Code.SpellFramework.DeliveryMethods.Scriptables
 
         public override ISpellNode GetNode()
         {
-            return new DeliveryMethodSpellNode(m_SpellNodeName, m_SpellNodeType, new ProjectileDeliveryMethod());
+            return new DeliveryMethodSpellNode(m_SpellNodeName, m_SpellNodeType, GetDeliveryMethod());
         }
 
         private IDeliveryMethod GetDeliveryMethod()
         {
             switch(deliveryMethod)
             {
+                case EDeliveryMethods.PBAoE:
+                    return new PointBlankAreaOfEffectDeliveryMethod();
                 default:
                     return new ProjectileDeliveryMethod();
             }

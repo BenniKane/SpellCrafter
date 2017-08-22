@@ -116,6 +116,8 @@ namespace PlayerFramework
                 activeSpell.transform.position = transform.position;
                 activeSpell.transform.rotation = playerCameraFocus.transform.rotation;
                 activeSpell.ActivateSpell();
+
+                activeSpell = null;
             }
             else if (Input.GetKeyDown(KeyCode.Escape))
             {
