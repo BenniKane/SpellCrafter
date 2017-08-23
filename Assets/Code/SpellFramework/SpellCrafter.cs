@@ -13,15 +13,17 @@ namespace Assets.Code.SpellFramework
         private SpellCollectionScriptable baseCollection;
         private SpellCollectionScriptable currentCollection;
         private List<ISpellNode> currentSpellQueue;
-        private Transform spellCaster;
-        private Spell spellPrefab;
+        private ISpellCaster spellCaster;
+        private MasterSpell spellPrefab;
+        private Subspell subSpellPrefab;
 
-        public SpellCrafter(Transform caster, SpellCollectionScriptable initialCollection, Spell spellBase)
+        public SpellCrafter(ISpellCaster caster, SpellCollectionScriptable initialCollection, MasterSpell spellBase, Subspell subSpellBase)
         {
             spellCaster = caster;
             baseCollection = initialCollection;
             currentCollection = baseCollection;
             spellPrefab = spellBase;
+            subSpellPrefab = subSpellBase;
 
             currentSpellQueue = new List<ISpellNode>();
         }
@@ -43,16 +45,28 @@ namespace Assets.Code.SpellFramework
             currentCollection = baseCollection;
         }
 
-        public Spell ProcessSpellQueue(Vector3 castingPoint, Quaternion rotation)
+        public MasterSpell ProcessSpellQueue()
         {
-            Spell composedSpell = UnityEngine.Object.Instantiate(spellPrefab, castingPoint, rotation);
+            MasterSpell composedSpell = UnityEngine.Object.Instantiate(spellPrefab, spellCaster.Position, spellCaster.LookRotation);
+            Subspell subSpell = UnityEngine.Object.Instantiate(subSpellPrefab, spellCaster.Position, spellCaster.LookRotation);
+            subSpell.SetCaster(spellCaster);
+
+            List<Subspell> subSpells = new List<Subspell>();
 
             for (int i = 0; i < currentSpellQueue.Count; i++)
             {
-                currentSpellQueue[i].AppendToSpell(composedSpell);
+                currentSpellQueue[i].AppendToSpell(subSpell);
+
+                if(currentSpellQueue[i].NodeType == SpellNodeType.Type)
+                {
+                    subSpells.Add(subSpell);
+                    subSpell = UnityEngine.Object.Instantiate(subSpellPrefab, spellCaster.Position, spellCaster.LookRotation);
+                    subSpell.SetCaster(spellCaster);
+                }
             }
 
-            composedSpell.SetCaster(spellCaster);
+            composedSpell.Caster = spellCaster;
+            composedSpell.SubSpells = subSpells.ToArray();
 
             currentSpellQueue.Clear();
             currentCollection = baseCollection;

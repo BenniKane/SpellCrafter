@@ -10,8 +10,7 @@ namespace Assets.Code.SpellFramework
     public interface IDeliveryMethod
     {
         EDeliveryMethods DeliveryMethod { get; }
-
-
-        void Activate(Spell parentObject);
+        
+        void Activate(Subspell parentObject);
     }
 }

@@ -13,9 +13,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SpellNodeName: Fire Elemental Damage
   m_SpellNodeType: 2
-  m_FollowUpCollection: {fileID: 11400000, guid: 2963acbc06a9f734aae9de4977abaacf,
+  m_FollowUpCollection: {fileID: 11400000, guid: 74dbce71e5ed7c74aac9ee7168286635,
     type: 2}
   m_DamageValue: 15
   m_ElementalType: 0
   m_DeliveryMethodParticleSystems:
   - {fileID: 198660400150643970, guid: b863094469d457447a0a1e9090a2645a, type: 2}
+  - {fileID: 198660400150643970, guid: b863094469d457447a0a1e9090a2645a, type: 2}
+  - {fileID: 198660400150643970, guid: b863094469d457447a0a1e9090a2645a, type: 2}
+  - {fileID: 198660400150643970, guid: b863094469d457447a0a1e9090a2645a, type: 2}
+  - {fileID: 198482731103950764, guid: fa40aee0910a58a4c936bb19504d6af3, type: 2}

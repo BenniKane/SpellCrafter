@@ -13,7 +13,7 @@ namespace Assets.Code.SpellFramework
         private float travelTime = 5.0f;
         private float currentTravelTime = 0f;
 
-        private Spell owningSpell;
+        private Subspell owningSpell;
 
         public EDeliveryMethods DeliveryMethod
         {
@@ -23,9 +23,11 @@ namespace Assets.Code.SpellFramework
             }
         }
 
-        public void Activate(Spell parentObject)
+        public void Activate(Subspell parentObject)
         {
             owningSpell = parentObject;
+
+            owningSpell.transform.SetPositionAndRotation(parentObject.Caster.Position, parentObject.Caster.LookRotation);
 
             owningSpell.GetComponent<Rigidbody>().AddForce(owningSpell.transform.forward * 875f);
             owningSpell.StartCoroutine(ProjectSpell());

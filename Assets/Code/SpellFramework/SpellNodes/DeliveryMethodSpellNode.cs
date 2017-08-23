@@ -32,7 +32,7 @@ namespace Assets.Code.SpellFramework.SpellNodes
             deliveryMethod = delivery;
         }
 
-        public void AppendToSpell(Spell parentObject)
+        public void AppendToSpell(Subspell parentObject)
         {
             parentObject.SetDeliveryMethod(deliveryMethod);
         }

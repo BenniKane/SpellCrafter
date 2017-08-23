@@ -36,7 +36,7 @@ namespace Assets.Code.SpellFramework
             spellEffect = effect;
         }
 
-        public void AppendToSpell(Spell parentObject)
+        public void AppendToSpell(Subspell parentObject)
         {
             parentObject.AddEffectToSpell(spellEffect);
         }

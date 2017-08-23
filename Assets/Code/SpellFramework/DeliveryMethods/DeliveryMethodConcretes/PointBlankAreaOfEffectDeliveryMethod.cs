@@ -12,7 +12,7 @@ namespace Assets.Code.SpellFramework.DeliveryMethods.DeliveryMethodConcretes
     {
         private float currentTimeAlive = 0f;
         private float lifetime = 3f;
-        private Spell owningSpell;
+        private Subspell owningSpell;
 
         public EDeliveryMethods DeliveryMethod
         {
@@ -22,10 +22,10 @@ namespace Assets.Code.SpellFramework.DeliveryMethods.DeliveryMethodConcretes
             }
         }
 
-        public void Activate(Spell parentObject)
+        public void Activate(Subspell parentObject)
         {
             owningSpell = parentObject;
-
+            owningSpell.transform.SetPositionAndRotation(parentObject.Caster.Position, parentObject.Caster.LookRotation);
             owningSpell.StartCoroutine(ProjectSpell());
         }
 

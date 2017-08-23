@@ -9,7 +9,7 @@ using Assets.Code.GeneralFramework;
 namespace PlayerFramework
 {
     [RequireComponent(typeof(CharacterController))]
-    public class Player : MonoBehaviour, IOnDeathNotify
+    public class Player : MonoBehaviour, IOnDeathNotify, ISpellCaster
     {
         private CharacterController movementController;
 
@@ -32,15 +32,34 @@ namespace PlayerFramework
         private SpellCrafter spellCrafter;
 
         [SerializeField]
-        private Spell spellBase;
-        private Spell activeSpell;
+        private Subspell subspellBase;
+        
+        [SerializeField]
+        private MasterSpell spellBase;
+        private MasterSpell activeSpell;
         private bool hasSpellPrepared = false;
+
+        public Quaternion LookRotation
+        {
+            get
+            {
+                return playerCameraFocus.rotation;
+            }
+        }
+
+        public Vector3 Position
+        {
+            get
+            {
+                return transform.position;
+            }
+        }
 
         private void Awake()
         {
             movementController = GetComponent<CharacterController>();
             animator = GetComponentInChildren<Animator>();
-            spellCrafter = new SpellCrafter(transform, generalSpellCollection, spellBase);
+            spellCrafter = new SpellCrafter(this, generalSpellCollection, spellBase, subspellBase);
         }
 
         void Start()
@@ -96,7 +115,7 @@ namespace PlayerFramework
             {
                 if (spellCrafter.SpellMeetsMinimumProcessRequirements())
                 {
-                    Spell newSpell = spellCrafter.ProcessSpellQueue(transform.position, playerCameraFocus.transform.rotation);
+                    MasterSpell newSpell = spellCrafter.ProcessSpellQueue();
 
                     if (newSpell != null)
                     {

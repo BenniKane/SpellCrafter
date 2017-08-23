@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.45084894, g: 0.5007609, b: 0.57464206, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -660,7 +660,9 @@ MonoBehaviour:
   playerSpeed: 5
   generalSpellCollection: {fileID: 11400000, guid: 74dbce71e5ed7c74aac9ee7168286635,
     type: 2}
-  spellBase: {fileID: 114172968777646814, guid: 5952f3864c462b94f8507ba8b556f41a,
+  subspellBase: {fileID: 114668605881691818, guid: 5952f3864c462b94f8507ba8b556f41a,
+    type: 2}
+  spellBase: {fileID: 114024696816987114, guid: 0b9527c184b17004fb58744918870b1e,
     type: 2}
 --- !u!143 &516927401
 CharacterController:
@@ -1129,13 +1131,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1379016951}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.29929066, y: 0, z: 0, w: 0.954162}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 34.83, y: 0, z: 0}
 --- !u!1 &1583169618
 GameObject:
   m_ObjectHideFlags: 0

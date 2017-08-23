@@ -4,9 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spell : MonoBehaviour
+public class Subspell : MonoBehaviour
 {
-    private Transform spellCaster;
+    private ISpellCaster spellCaster;
 
     private IDeliveryMethod spellDeliveryMethod;
     private List<ISpellEffect> spellEffects;
@@ -14,6 +14,15 @@ public class Spell : MonoBehaviour
     {
         get { return spellEffects; }
     }
+
+    public ISpellCaster Caster
+    {
+        get
+        {
+            return spellCaster;
+        }
+    }
+
     // Use this for initialization
     private void Awake()
     {
@@ -30,7 +39,7 @@ public class Spell : MonoBehaviour
         spellEffects.Add(spellEffect);
     }
 
-    public void SetCaster(Transform caster)
+    public void SetCaster(ISpellCaster caster)
     {
         spellCaster = caster;
     }
@@ -51,16 +60,26 @@ public class Spell : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform != spellCaster)
-        {
-            ISpellTarget target = other.GetComponent<ISpellTarget>();
+        ISpellCaster[] spellCasterComponentsOnOther = other.transform.GetComponentsInChildren<ISpellCaster>();
 
-            if(target != null)
+        if (spellCasterComponentsOnOther.Length == 0)
+            return;
+
+        for(int i = 0; i < spellCasterComponentsOnOther.Length; i++)
+        {
+            if(spellCasterComponentsOnOther[i] == spellCaster)
             {
-                for(int i = 0; i < spellEffects.Count; i++)
-                {
-                    spellEffects[i].ProcessOnTarget(target);
-                }
+                return;
+            }
+        }
+
+        ISpellTarget target = other.GetComponent<ISpellTarget>();
+
+        if (target != null)
+        {
+            for (int i = 0; i < spellEffects.Count; i++)
+            {
+                spellEffects[i].ProcessOnTarget(target);
             }
         }
     }

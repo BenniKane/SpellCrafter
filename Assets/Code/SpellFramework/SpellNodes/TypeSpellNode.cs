@@ -33,7 +33,7 @@ namespace Assets.Code.SpellFramework.SpellNodes
             spellType = type;
         }
 
-        public void AppendToSpell(Spell parentObject)
+        public void AppendToSpell(Subspell parentObject)
         {
             //Find the last effect, add this as its spell type
             parentObject.SpellEffects[parentObject.SpellEffects.Count - 1].SpellType = spellType;

@@ -12,6 +12,6 @@ namespace Assets.Code.SpellFramework.SpellNodes
 
         SpellNodeType NodeType { get; }
 
-        void AppendToSpell(Spell parentObject);
+        void AppendToSpell(Subspell parentObject);
     }
 }
