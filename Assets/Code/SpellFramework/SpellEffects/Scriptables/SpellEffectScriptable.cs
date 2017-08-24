@@ -21,7 +21,7 @@ namespace Assets.Code.SpellFramework.SpellEffects
 
         public override ISpellNode GetNode()
         {
-            return new EffectSpellNode(m_SpellNodeName, m_SpellNodeType, GetSpellNode());
+            return new EffectSpellNode(m_SpellNodeName, m_SpellNodeType, GetSpellNode(), m_ProcessingTime);
         }
 
         private ISpellEffect GetSpellNode()

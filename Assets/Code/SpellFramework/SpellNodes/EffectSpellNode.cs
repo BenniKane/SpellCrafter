@@ -27,13 +27,20 @@ namespace Assets.Code.SpellFramework
             }
         }
 
+        private float processingTime;
+        public float ProcessingTime
+        {
+            get { return processingTime; }
+        }
+
         private ISpellEffect spellEffect;
 
-        public EffectSpellNode(string effectName, SpellNodeType type, ISpellEffect effect)
+        public EffectSpellNode(string effectName, SpellNodeType type, ISpellEffect effect, float processTime)
         {
             name = effectName;
             nodeType = type;
             spellEffect = effect;
+            processingTime = processTime;
         }
 
         public void AppendToSpell(Subspell parentObject)

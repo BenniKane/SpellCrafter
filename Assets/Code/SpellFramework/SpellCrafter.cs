@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using UnityEngine;
+using System.Collections;
 
 namespace Assets.Code.SpellFramework
 {
-    public class SpellCrafter
+    public class SpellCrafter : MonoBehaviour
     {
         private SpellCollectionScriptable baseCollection;
         private SpellCollectionScriptable currentCollection;
@@ -17,21 +17,44 @@ namespace Assets.Code.SpellFramework
         private MasterSpell spellPrefab;
         private Subspell subSpellPrefab;
 
-        public SpellCrafter(ISpellCaster caster, SpellCollectionScriptable initialCollection, MasterSpell spellBase, Subspell subSpellBase)
+        private List<ISpellNode> spellInputsToProcess;
+        private bool processingComponentInput;
+        private bool bPrepareSpellWhenFinishedProcessing = false;
+        private void Awake()
+        {
+            processingComponentInput = false;
+            spellInputsToProcess = new List<ISpellNode>();
+            currentSpellQueue = new List<ISpellNode>();
+        }
+
+        public void InitializeSpellCrafter(ISpellCaster caster, SpellCollectionScriptable initialCollection, MasterSpell spellBase, Subspell subSpellBase)
         {
             spellCaster = caster;
             baseCollection = initialCollection;
             currentCollection = baseCollection;
             spellPrefab = spellBase;
             subSpellPrefab = subSpellBase;
-
-            currentSpellQueue = new List<ISpellNode>();
         }
 
         public void ProcessSpellInputRequest(int index)
         {
-            currentSpellQueue.Add(currentCollection.GetSpellNode(index));
-            currentCollection = currentCollection.GetNextCollection();
+            if (processingComponentInput)
+            {
+                spellInputsToProcess.Add(currentCollection.GetSpellNode(index));
+                currentCollection = currentCollection.GetNextCollection();
+
+            }
+            else
+            {
+                processingComponentInput = true;
+
+                ISpellNode spellNode = currentCollection.GetSpellNode(index);
+
+                currentSpellQueue.Add(spellNode);
+                currentCollection = currentCollection.GetNextCollection();
+
+                StartCoroutine(ProcessSpellComponentInput(spellNode));
+            }
         }
 
         public bool SpellMeetsMinimumProcessRequirements()
@@ -45,6 +68,11 @@ namespace Assets.Code.SpellFramework
             currentCollection = baseCollection;
         }
 
+        public void ExitingCastMode()
+        {
+            bPrepareSpellWhenFinishedProcessing = true;
+        }
+
         public MasterSpell ProcessSpellQueue()
         {
             MasterSpell composedSpell = UnityEngine.Object.Instantiate(spellPrefab, spellCaster.Position, spellCaster.LookRotation);
@@ -53,6 +81,7 @@ namespace Assets.Code.SpellFramework
 
             List<Subspell> subSpells = new List<Subspell>();
 
+            GetComponentInChildren<Animator>().SetBool("processingSpellComponents", false);
             for (int i = 0; i < currentSpellQueue.Count; i++)
             {
                 currentSpellQueue[i].AppendToSpell(subSpell);
@@ -72,6 +101,53 @@ namespace Assets.Code.SpellFramework
             currentCollection = baseCollection;
             
             return composedSpell;
+        }
+
+        public bool HasComponentsToProcess()
+        {
+            return processingComponentInput || spellInputsToProcess.Count > 0 ;
+        }
+
+        private IEnumerator ProcessSpellComponentInput(ISpellNode spellNode)
+        {
+            // Visually Display the rune. Get the Particle System for it, put it in front of the player, etc
+
+            UnityEngine.Debug.Log("Processing Spell Node:" + spellNode.Name);
+
+            GetComponentInChildren<Animator>().SetBool("processingSpellComponents", true);
+            currentSpellQueue.Add(spellNode);
+
+            float currentTimeElapsed = 0f;
+            float timeRequiredForSpellNodeProcessing = spellNode.ProcessingTime;
+            while(currentTimeElapsed < timeRequiredForSpellNodeProcessing)
+            {
+                yield return new WaitForEndOfFrame();
+                currentTimeElapsed += Time.deltaTime;
+                
+                if(currentTimeElapsed >= timeRequiredForSpellNodeProcessing && spellInputsToProcess.Count > 0)
+                {
+                    ISpellNode nextNode = spellInputsToProcess[0];
+                    spellInputsToProcess.RemoveAt(0);
+
+                    UnityEngine.Debug.Log("Processing Spell Node:" + nextNode.Name);
+
+                    currentTimeElapsed = 0f;
+                    timeRequiredForSpellNodeProcessing = nextNode.ProcessingTime;
+
+                    currentSpellQueue.Add(nextNode);
+
+                    // Visually Display the rune. Get the Particle System for it, put it in front of the player, etc
+                }
+            }
+
+            processingComponentInput = false;
+
+            if(bPrepareSpellWhenFinishedProcessing)
+            {
+                bPrepareSpellWhenFinishedProcessing = false;
+                MasterSpell finalSpell = ProcessSpellQueue();
+                spellCaster.ReceiveSpell(finalSpell);
+            }
         }
     }
 }

@@ -21,9 +21,7 @@ namespace Assets.Code.SpellFramework.SpellTypes.Scriptables
 
         public override ISpellNode GetNode()
         {
-            return new TypeSpellNode(m_SpellNodeName, m_SpellNodeType, new ElementalDamageType(m_DamageValue, m_ElementalType, m_DeliveryMethodParticleSystems));
+            return new TypeSpellNode(m_SpellNodeName, m_SpellNodeType, new ElementalDamageType(m_DamageValue, m_ElementalType, m_DeliveryMethodParticleSystems), m_ProcessingTime);
         }
-
-
     }
 }

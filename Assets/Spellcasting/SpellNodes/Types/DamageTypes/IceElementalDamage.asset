@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SpellNodeName: Ice Elemental Damage
   m_SpellNodeType: 2
+  m_ProcessingTime: 2
   m_FollowUpCollection: {fileID: 11400000, guid: 74dbce71e5ed7c74aac9ee7168286635,
     type: 2}
   m_DamageValue: 10

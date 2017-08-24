@@ -8,6 +8,7 @@ using Assets.Code.GeneralFramework;
 
 namespace PlayerFramework
 {
+    [RequireComponent(typeof(SpellCrafter))]
     [RequireComponent(typeof(CharacterController))]
     public class Player : MonoBehaviour, IOnDeathNotify, ISpellCaster
     {
@@ -59,11 +60,13 @@ namespace PlayerFramework
         {
             movementController = GetComponent<CharacterController>();
             animator = GetComponentInChildren<Animator>();
-            spellCrafter = new SpellCrafter(this, generalSpellCollection, spellBase, subspellBase);
         }
 
         void Start()
         {
+            spellCrafter = GetComponent<SpellCrafter>();
+            spellCrafter.InitializeSpellCrafter(this, generalSpellCollection, spellBase, subspellBase);
+
             currentPitch = 0f;
 
             Cursor.lockState = CursorLockMode.Locked;
@@ -75,7 +78,10 @@ namespace PlayerFramework
             if(Input.GetKeyDown(KeyCode.Mouse1))
             {
                 inCastMode = true;
-                if(activeSpell != null)
+
+                animator.SetBool("inCastMode", true);
+
+                if (activeSpell != null)
                 {
                     Destroy(activeSpell.gameObject);
                     activeSpell = null;
@@ -84,6 +90,8 @@ namespace PlayerFramework
             else if (Input.GetKeyUp(KeyCode.Mouse1))
             {
                 inCastMode = false;
+                animator.SetBool("inCastMode", false);
+                spellCrafter.ExitingCastMode();
             }
 
             if (inCastMode)
@@ -111,46 +119,38 @@ namespace PlayerFramework
                     spellCrafter.ProcessSpellInputRequest(spellIndex);
                 }
             }
-            else if (wasInCastMode && !inCastMode)
+            else if (spellCrafter.HasComponentsToProcess())
             {
-                if (spellCrafter.SpellMeetsMinimumProcessRequirements())
-                {
-                    MasterSpell newSpell = spellCrafter.ProcessSpellQueue();
-
-                    if (newSpell != null)
-                    {
-                        Debug.Log("Created a new spell...");
-                    }
-                    
-                    activeSpell = newSpell;
-                    
-                }
-                else
-                {
-                    spellCrafter.ClearSpellQueue();
-                }
-            }
-            else if(Input.GetKeyDown(KeyCode.Mouse0) && activeSpell != null)
-            {
-                activeSpell.transform.position = transform.position;
-                activeSpell.transform.rotation = playerCameraFocus.transform.rotation;
-                activeSpell.ActivateSpell();
-
-                activeSpell = null;
-            }
-            else if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                cursorLocked = !cursorLocked;
-
-                Cursor.lockState = cursorLocked ? CursorLockMode.Locked : CursorLockMode.None;
-                Cursor.visible = !cursorLocked;
+                // This is our empty state to display holding the spell...
             }
             else
             {
                 HandleRotation();
                 HandleTranslation();
+                if (activeSpell != null)
+                {
+                    if (Input.GetKeyDown(KeyCode.Mouse0))
+                    {
+                        activeSpell.transform.position = transform.position;
+                        activeSpell.transform.rotation = playerCameraFocus.transform.rotation;
+                        activeSpell.ActivateSpell();
+
+                        activeSpell = null;
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    cursorLocked = !cursorLocked;
+
+                    Cursor.lockState = cursorLocked ? CursorLockMode.Locked : CursorLockMode.None;
+                    Cursor.visible = !cursorLocked;
+                }
             }
-            
+        }
+
+        public void ReceiveSpell(MasterSpell masterspell)
+        {
+            activeSpell = masterspell;
         }
 
         // Simple, just enough
@@ -210,6 +210,16 @@ namespace PlayerFramework
         public void OnNotificationOfDeath()
         {
             Debug.Log("Player has Died");
+        }
+
+        public bool HoldingCastModeButton()
+        {
+            return Input.GetKey(KeyCode.Mouse1);
+        }
+
+        public bool HasSpellComponentsToProcess()
+        {
+            return spellCrafter.HasComponentsToProcess();
         }
     }
 }

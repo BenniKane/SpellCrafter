@@ -24,13 +24,20 @@ namespace Assets.Code.SpellFramework.SpellNodes
             get { return nodeType; }
         }
 
+        private float processingTime;
+        public float ProcessingTime
+        {
+            get { return processingTime; }
+        }
+
         private ISpellType spellType;
 
-        public TypeSpellNode(string deliveryMethodName, SpellNodeType spellNodeType, ISpellType type)
+        public TypeSpellNode(string deliveryMethodName, SpellNodeType spellNodeType, ISpellType type, float processTime)
         {
             name = deliveryMethodName;
             nodeType = spellNodeType;
             spellType = type;
+            processingTime = processTime;
         }
 
         public void AppendToSpell(Subspell parentObject)

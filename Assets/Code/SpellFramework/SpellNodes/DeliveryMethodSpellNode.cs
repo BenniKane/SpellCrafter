@@ -23,15 +23,22 @@ namespace Assets.Code.SpellFramework.SpellNodes
             get { return nodeType; }
         }
 
+        private float processingTime;
+        public float ProcessingTime
+        {
+            get { return processingTime; }
+        }
+
         private IDeliveryMethod deliveryMethod;
 
-        public DeliveryMethodSpellNode(string deliveryMethodName, SpellNodeType spellNodeType, IDeliveryMethod delivery)
+        public DeliveryMethodSpellNode(string deliveryMethodName, SpellNodeType spellNodeType, IDeliveryMethod delivery, float processTime)
         {
             name = deliveryMethodName;
             nodeType = spellNodeType;
             deliveryMethod = delivery;
+            processingTime = processTime;
         }
-
+        
         public void AppendToSpell(Subspell parentObject)
         {
             parentObject.SetDeliveryMethod(deliveryMethod);

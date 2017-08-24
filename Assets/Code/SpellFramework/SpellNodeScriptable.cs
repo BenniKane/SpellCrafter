@@ -20,6 +20,8 @@ namespace Assets.Code.SpellFramework
 
         public SpellNodeType m_SpellNodeType;
 
+        public float m_ProcessingTime;
+
         public SpellCollectionScriptable m_FollowUpCollection;
 
         public abstract ISpellNode GetNode();

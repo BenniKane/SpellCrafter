@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SpellNodeName: Damage Effect
   m_SpellNodeType: 1
+  m_ProcessingTime: 0.5
   m_FollowUpCollection: {fileID: 11400000, guid: 7feb612fbda4f6742954559ff6436f8e,
     type: 2}
   spellEffect: 0

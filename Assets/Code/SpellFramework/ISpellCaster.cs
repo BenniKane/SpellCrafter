@@ -17,5 +17,7 @@ namespace Assets.Code.SpellFramework
         {
             get;
         }
+
+        void ReceiveSpell(MasterSpell spell);
     }
 }
