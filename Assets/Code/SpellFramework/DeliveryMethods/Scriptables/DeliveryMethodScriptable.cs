@@ -24,7 +24,7 @@ namespace Assets.Code.SpellFramework.DeliveryMethods.Scriptables
 
         public override ISpellNode GetNode()
         {
-            return new DeliveryMethodSpellNode(m_SpellNodeName, m_SpellNodeType, GetDeliveryMethod(), m_ProcessingTime);
+            return new DeliveryMethodSpellNode(m_SpellNodeName, m_SpellNodeType, GetDeliveryMethod(), m_ProcessingTime, m_DisplayParticle);
         }
 
         private IDeliveryMethod GetDeliveryMethod()

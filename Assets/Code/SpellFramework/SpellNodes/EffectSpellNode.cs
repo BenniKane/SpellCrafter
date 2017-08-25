@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Code.SpellFramework
 {
@@ -33,14 +34,21 @@ namespace Assets.Code.SpellFramework
             get { return processingTime; }
         }
 
+        private GameObject displayParticle;
+        public GameObject DisplayParticle
+        {
+            get { return displayParticle; }
+        }
+
         private ISpellEffect spellEffect;
 
-        public EffectSpellNode(string effectName, SpellNodeType type, ISpellEffect effect, float processTime)
+        public EffectSpellNode(string effectName, SpellNodeType type, ISpellEffect effect, float processTime, GameObject appearance)
         {
             name = effectName;
             nodeType = type;
             spellEffect = effect;
             processingTime = processTime;
+            displayParticle = appearance;
         }
 
         public void AppendToSpell(Subspell parentObject)

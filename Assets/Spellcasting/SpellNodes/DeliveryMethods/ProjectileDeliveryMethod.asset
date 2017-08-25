@@ -14,6 +14,8 @@ MonoBehaviour:
   m_SpellNodeName: Projectile Delivery
   m_SpellNodeType: 0
   m_ProcessingTime: 0.5
+  m_DisplayParticle: {fileID: 1638972403855402, guid: 871070e3ffd47ee49ae6795b2e6cb87a,
+    type: 2}
   m_FollowUpCollection: {fileID: 11400000, guid: 2963acbc06a9f734aae9de4977abaacf,
     type: 2}
   deliveryMethod: 0

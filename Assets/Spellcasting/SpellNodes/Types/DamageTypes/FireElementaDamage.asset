@@ -13,7 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SpellNodeName: Fire Elemental Damage
   m_SpellNodeType: 2
-  m_ProcessingTime: 2
+  m_ProcessingTime: 0.5
+  m_DisplayParticle: {fileID: 1227316116554186, guid: 3549fa80f45e5544d88f6ab7a1b883f0,
+    type: 2}
   m_FollowUpCollection: {fileID: 11400000, guid: 74dbce71e5ed7c74aac9ee7168286635,
     type: 2}
   m_DamageValue: 15

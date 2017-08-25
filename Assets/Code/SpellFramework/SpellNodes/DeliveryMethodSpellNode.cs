@@ -29,14 +29,21 @@ namespace Assets.Code.SpellFramework.SpellNodes
             get { return processingTime; }
         }
 
+        private GameObject displayParticle;
+        public GameObject DisplayParticle
+        {
+            get { return displayParticle; }
+        }
+
         private IDeliveryMethod deliveryMethod;
 
-        public DeliveryMethodSpellNode(string deliveryMethodName, SpellNodeType spellNodeType, IDeliveryMethod delivery, float processTime)
+        public DeliveryMethodSpellNode(string deliveryMethodName, SpellNodeType spellNodeType, IDeliveryMethod delivery, float processTime, GameObject appearance)
         {
             name = deliveryMethodName;
             nodeType = spellNodeType;
             deliveryMethod = delivery;
             processingTime = processTime;
+            displayParticle = appearance;
         }
         
         public void AppendToSpell(Subspell parentObject)

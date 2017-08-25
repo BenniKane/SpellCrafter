@@ -14,6 +14,8 @@ namespace Assets.Code.SpellFramework.SpellNodes
 
         float ProcessingTime { get; }
 
+        GameObject DisplayParticle { get; }
+
         void AppendToSpell(Subspell parentObject);
     }
 }

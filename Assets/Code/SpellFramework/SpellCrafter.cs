@@ -112,6 +112,8 @@ namespace Assets.Code.SpellFramework
         {
             // Visually Display the rune. Get the Particle System for it, put it in front of the player, etc
 
+            GameObject visual = Instantiate(spellNode.DisplayParticle, spellCaster.Position + (transform.forward * 1.5f), Quaternion.identity);
+
             UnityEngine.Debug.Log("Processing Spell Node:" + spellNode.Name);
 
             GetComponentInChildren<Animator>().SetBool("processingSpellComponents", true);
@@ -128,7 +130,8 @@ namespace Assets.Code.SpellFramework
                 {
                     ISpellNode nextNode = spellInputsToProcess[0];
                     spellInputsToProcess.RemoveAt(0);
-
+                    Destroy(visual);
+                    visual = Instantiate(nextNode.DisplayParticle, spellCaster.Position + (transform.forward * 1.5f), Quaternion.identity);
                     UnityEngine.Debug.Log("Processing Spell Node:" + nextNode.Name);
 
                     currentTimeElapsed = 0f;
@@ -141,6 +144,10 @@ namespace Assets.Code.SpellFramework
             }
 
             processingComponentInput = false;
+            if(visual != null)
+            {
+                Destroy(visual);
+            }
 
             if(bPrepareSpellWhenFinishedProcessing)
             {

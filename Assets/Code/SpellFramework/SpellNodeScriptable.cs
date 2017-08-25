@@ -22,6 +22,8 @@ namespace Assets.Code.SpellFramework
 
         public float m_ProcessingTime;
 
+        public GameObject m_DisplayParticle;
+
         public SpellCollectionScriptable m_FollowUpCollection;
 
         public abstract ISpellNode GetNode();
